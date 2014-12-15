@@ -1,4 +1,4 @@
-ConectGameComp
+ConnectGameComp
 ==============
 
-We are creating a game to be played and will go to a coding competition 
+We are creating a game to be played and will go to a coding competition
