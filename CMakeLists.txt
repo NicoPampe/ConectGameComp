@@ -23,6 +23,9 @@ endif()
 
 add_executable(ConnectGameComp 
 		source/main.cpp
+		source/Game.cpp
+
+		include/Game.hpp
 )
 
 target_link_libraries(
