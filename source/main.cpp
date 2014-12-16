@@ -38,8 +38,7 @@ int main() {
 	{
 		// call clear at the start of the loop
 		window.clear(sf::Color::Black);
-
-
+				
 		// creat an event, check all of the windows events
 		sf::Event event;
 		while (window.pollEvent(event))
@@ -53,8 +52,7 @@ int main() {
 				rectangle.rotate(90);
 			}
 		}
-
-
+		
 		sf::CircleShape shape(50);
 
 		// set the shape color to green
