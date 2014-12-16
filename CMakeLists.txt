@@ -24,8 +24,16 @@ endif()
 add_executable(ConnectGameComp 
 		source/main.cpp
 		source/Game.cpp
+		source/Knights.cpp
+		source/Objects.cpp
+		source/OverWorld.cpp
+		source/Party.cpp
 
 		include/Game.hpp
+		include/Knights/hpp
+		include/Objects.hpp
+		include/OverWorld.hpp
+		include/Party.hpp
 )
 
 target_link_libraries(

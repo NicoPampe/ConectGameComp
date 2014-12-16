@@ -14,4 +14,4 @@ public:
 private:
 	int health;
 	sf::Vector2f postion;
-}
+};
