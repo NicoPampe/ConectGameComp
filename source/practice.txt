@@ -1,0 +1,57 @@
+// here is a bunch of code that I used to practice and learn how the windows, events, and keyboard works with SFML
+// ask Chris about deleting the old code. It should be able to be tracked. (Only if it was push?)
+int main() {
+	
+
+	sf::Window window(sf::VideoMode(800, 600), "My window");
+	window.setVerticalSyncEnabled(true);
+	sf::Style::Close;
+
+	// run the program as long as the window is open
+	while (window.isOpen())
+	{
+		// creat an event, check all of the windows events
+		sf::Event event;
+		while (window.pollEvent(event))
+		{
+			// "close ruquest" we want to close the window and program
+			if (event.type == sf::Event::Closed || sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
+				window.close();
+			/*else if (event.KeyPressed)
+			{
+				std::cout << "key" << std::endl;
+				break;
+			}*/
+			if (event.type == sf::Event::TextEntered)
+			{
+				if (event.text.unicode < 120)
+					std::cout << "ASCII character typed is: " << static_cast<char>(event.text.unicode) << std::endl;
+			}
+			if (event.type == sf::Event::KeyPressed)
+			{
+				if (event.key.code == sf::Keyboard::L)
+				{
+					std::cout << "the escape key was pressed" << std::endl;
+					std::cout << "control:" << event.key.control << std::endl;
+					std::cout << "alt:" << event.key.alt << std::endl;
+					std::cout << "shift:" << event.key.shift << std::endl;
+					std::cout << "system:" << event.key.system << std::endl;
+				}
+			}
+			if (event.type == sf::Event::MouseMoved)
+			{
+				//std::cout << "new mouse x: " << event.mouseMove.x << std::endl;
+				//std::cout << "new mouse y: " << event.mouseMove.y << std::endl;
+			}
+			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
+				std::cout << "Left key was pressed" << std::endl;
+			else
+				break;
+
+
+		}
+
+	}
+
+	return 0;
+}
