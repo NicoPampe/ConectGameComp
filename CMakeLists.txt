@@ -24,7 +24,7 @@ endif()
 include_directories(include)
 
 add_executable(ConnectGameComp
-		Win32
+		WIN32
 		source/main.cpp
 		source/Game.cpp
 		source/OverWorld.cpp
