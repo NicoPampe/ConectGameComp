@@ -21,6 +21,8 @@ else()
 	set(SFML_LIBS ${SFML_GRAPHICS} ${SFML_SYSTEM} ${SFML_WINDOW})
 endif()
 
+add_subdirectory(lua)
+
 include_directories(include)
 
 add_executable(ConnectGameComp
