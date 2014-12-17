@@ -52,9 +52,13 @@ private:
 	// TODO: Render parts of a map, which we load ourselves.
 	sf::Sprite overworld_background_;
 
+	// TODO: creat a 2d arry or vector to creat multiple trees
+	sf::Sprite overworld_trees_;
+
 	// This *must* have the same lifetime as overworld_background_, or we'll
 	//   get the "white box problem" and invalid memory issues.
 	sf::Texture overworld_background_texture_;
+	sf::Texture overworld_tree_texture_;
 
 	// Set to false iff the game is over.
 	bool running_ = true;

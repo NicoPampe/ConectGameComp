@@ -1,5 +1,7 @@
 #pragma once
 
+#include "OverWorldObjects.hpp"
+
 #include "Common.hpp"
 
 // This class is the world that the party can navagate in. The OverWorld will be a gride like layout that the party can move on, from square to square.
@@ -17,9 +19,14 @@ public:
 	sf::Vector2f minBounds();
 	sf::Vector2f maxBounds();
 
+	// TODO: create a 2D vector or arry to put multiple trees in the overworld
+	Tree tree1_;
+
 private:
 	// TODO: Have some sort of player object.
-
+	
+	// TODO: load objects in the overworld
+	
 	// Start the player in the middle of the board.
 	sf::Vector2f player_ = sf::Vector2f(512, 512);
 
