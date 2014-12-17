@@ -26,6 +26,9 @@ public:
 	//   to deal with
 	void handleEvents();
 
+
+	void update();
+
 	// Draw everything.
 	void draw();
 
@@ -44,6 +47,14 @@ private:
 	//   in the development process, so this will be a rectangle
 	//   because that's all we need right now.
 	sf::RectangleShape player_;
+
+	// The texture to render as the background.
+	// TODO: Render parts of a map, which we load ourselves.
+	sf::Sprite overworld_background_;
+
+	// This *must* have the same lifetime as overworld_background_, or we'll
+	//   get the "white box problem" and invalid memory issues.
+	sf::Texture overworld_background_texture_;
 
 	// Set to false iff the game is over.
 	bool running_ = true;

@@ -9,8 +9,12 @@ bool Game::setup() {
 	// This is a dark-ish green intended to resemble Link.
 	player_.setFillColor(sf::Color(0x00, 0x66, 0x00));
 
-	overworld_.SetBackground();
-	
+	if (!overworld_background_texture_.loadFromFile("TestOverworld.png")) {
+		// Something went wrong loading the texture.
+		return false;
+	}
+	overworld_background_.setTexture(overworld_background_texture_);
+
 	return true;
 }
 
@@ -23,14 +27,16 @@ void Game::start() {
 		sf::Style::Default
 		);
 
-	view_.setCenter(0, 0);
+	view_.setCenter(overworld_.playerPosition());
 
 	// The test overworld sprite is 1024x1024.
 	view_.setSize(1024, 1024);
+	view_.zoom(0.3);
 	updateView();
 
 	while (running_) {
 		handleEvents();
+		update();
 		draw();
 	}
 
@@ -38,6 +44,7 @@ void Game::start() {
 
 void Game::handleEvents() {
 	sf::Event event;
+
 	while (window_.pollEvent(event)) {
 		if (event.type == sf::Event::Closed
 			|| sf::Keyboard::isKeyPressed(sf::Keyboard::Escape)) {
@@ -49,45 +56,48 @@ void Game::handleEvents() {
 			player_.rotate(15);
 		}
 		if (event.type == sf::Event::Resized) {
-			auto new_size = sf::Vector2f(event.size.width, event.size.height);
+			auto new_size = sf::Vector2f(
+				static_cast<float>(event.size.width),
+				static_cast<float>(event.size.height));
 			view_.setSize(new_size);
-			updateView();
+			view_.zoom(0.3);
 		}
 	}
 
-	const float move_speed = 0.1;
+	const float move_speed = 0.4f;
 
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right)) {
-		player_.move(move_speed, 0);
-		view_.move(move_speed, 0);
-		updateView();
+		overworld_.movePlayer(move_speed, 0);
 	}
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left)) {
-		player_.move(-move_speed, 0);
-		view_.move(-move_speed, 0);
-		updateView();
+		overworld_.movePlayer(-move_speed, 0);
 	}
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down)) {
-		player_.move(0, move_speed);
-		view_.move(0, move_speed);
-		updateView();
+		overworld_.movePlayer(0, move_speed);
 	}
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up)) {
-		player_.move(0, -move_speed);
-		view_.move(0, -move_speed);
-		updateView();
+		overworld_.movePlayer(0, -move_speed);
 	}
+}
+
+void Game::update() {
+	player_.setPosition(overworld_.playerPosition());
+	updateView();
 }
 
 void Game::draw() {
 	window_.clear(sf::Color::Black);
 
-	// Draw the OverWorld
-	overworld_.DrawOverWorld(window_);
+	// Draw the background first, so everthing is drawn ontop of it.
+	window_.draw(overworld_background_);
 
 	// Reference point.
-	window_.draw(sf::CircleShape(50, 50));
+	sf::CircleShape center;
+	center.setRadius(25);
+	center.move(-25, -25);
+	window_.draw(center);
 
+	// Draw the player last, so that they are on top.
 	window_.draw(player_);
 	window_.display();
 }
@@ -95,5 +105,6 @@ void Game::draw() {
 // Private methods
 
 void Game::updateView() {
+	view_.setCenter(overworld_.playerPosition());
 	window_.setView(view_);
 }

@@ -1,22 +1,26 @@
 #include "OverWorld.hpp"
 
+void OverWorld::movePlayer(float dx, float dy) {
+	player_ += sf::Vector2f(dx, dy);
 
-#include <iostream>
+	// The player square is 20 units wide.
+	if (player_.x > max_bounds_.x - 20) {
+		player_.x = max_bounds_.x - 20;
+	}
+	if (player_.x < min_bounds_.x) {
+		player_.x = min_bounds_.x;
+	}
 
-void OverWorld::SetBackground() {
-	//texture.loadFromFile("TestOverWorld.png");
-	if (!texture.loadFromFile("TestOverWorld.png"))
-		std::cout << "ERROR OPENING FILE";
-	Background.setTexture(texture);	
+	// ... and 25 tall.
+	if (player_.y > max_bounds_.y - 25) {
+		player_.y = max_bounds_.y - 25;
+	}
+	if (player_.y < min_bounds_.y) {
+		player_.y = min_bounds_.y;
+	}
+
 }
 
-void OverWorld::DrawOverWorld(sf::RenderWindow &window) {
-	sf::Vector2u windowScale = window.getSize();
-	//sf::Vector2f size = window.getSize();
-	//Background.setScale(windowScale.x, windowScale.y);
-	//Background.setScale((float)1 / ((float)1000 / windowScale.x), (float)1 / ((float)1000 / windowScale.y));
-	//Background.setScale(.5, .5);
-	sf::Vector2f sizeB = Background.getScale();
-	std::cout << sizeB.x << " " << sizeB.y << std::endl;
-	window.draw(Background);
+sf::Vector2f OverWorld::playerPosition() {
+	return player_;
 }
