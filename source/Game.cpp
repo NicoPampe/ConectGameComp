@@ -1,4 +1,5 @@
 #include "Game.hpp"
+#include "OverWorld.hpp"
 
 #include "Common.hpp"
 
@@ -8,6 +9,8 @@ bool Game::setup() {
 	// This is a dark-ish green intended to resemble Link.
 	player_.setFillColor(sf::Color(0x00, 0x66, 0x00));
 
+	overworld_.SetBackground();
+	
 	return true;
 }
 
@@ -52,7 +55,7 @@ void Game::handleEvents() {
 		}
 	}
 
-	const float move_speed = 1;
+	const float move_speed = 0.1;
 
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right)) {
 		player_.move(move_speed, 0);
@@ -78,11 +81,14 @@ void Game::handleEvents() {
 
 void Game::draw() {
 	window_.clear(sf::Color::Black);
-	window_.draw(player_);
+
+	// Draw the OverWorld
+	overworld_.DrawOverWorld(window_);
 
 	// Reference point.
 	window_.draw(sf::CircleShape(50, 50));
 
+	window_.draw(player_);
 	window_.display();
 }
 
