@@ -39,7 +39,6 @@ void Game::start() {
 		update();
 		draw();
 	}
-
 }
 
 void Game::handleEvents() {
