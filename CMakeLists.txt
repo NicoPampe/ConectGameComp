@@ -32,6 +32,7 @@ add_executable(ConnectGameComp
 		include/Common.hpp
 		include/Game.hpp
 		include/OverWorld.hpp
+		include/OverWorldObjects.hpp
 )
 
 target_link_libraries(
