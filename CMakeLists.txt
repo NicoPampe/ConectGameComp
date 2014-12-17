@@ -39,3 +39,8 @@ target_link_libraries(
 	${SFML_LIBS}
 )
 
+add_custom_command(
+	TARGET ConnectGameComp PRE_BUILD
+	COMMAND ${CMAKE_COMMAND} -E copy_directory
+		${CMAKE_SOURCE_DIR}/resources $<TARGET_FILE_DIR:ConnectGameComp>/resources
+)
