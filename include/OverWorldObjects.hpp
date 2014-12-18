@@ -8,7 +8,7 @@ public:
 	sf::Sprite tree_;
 	
 	void set_tree_position_(sf::Vector2f position_) { tree_.setPosition(position_); tree_position_ = position_; };
-	void set_texture_() { tree_texture_.loadFromFile("Tree1.png"); tree_.setTexture(tree_texture_); };
+	void set_texture_() { tree_texture_.loadFromFile("resources/Tree1.png"); tree_.setTexture(tree_texture_); };
 	//sf::Sprite get_sprite() { return tree_; };
 
 private:

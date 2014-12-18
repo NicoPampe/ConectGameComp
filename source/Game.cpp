@@ -10,13 +10,13 @@ bool Game::setup() {
 	// This is a dark-ish green intended to resemble Link.
 	player_.setFillColor(sf::Color(0x00, 0x66, 0x00));
 
-	if (!overworld_background_texture_.loadFromFile("TestOverworld.png")) {
+	if (!overworld_background_texture_.loadFromFile("resources/TestOverworld.png")) {
 		// Something went wrong loading the texture.
 		return false;
 	}
 	overworld_background_.setTexture(overworld_background_texture_);
 
-	Lua map("map2.lua");
+	Lua map("resources/OverWorldMap.lua");
 	//map.load();
 	
 
