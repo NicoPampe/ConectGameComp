@@ -5,8 +5,6 @@ add_definitions(
 	-DLUA_BUILD_AS_DLL
 )
 
-set(LUA_LIB lua-5.2)
-
 add_library(${LUA_LIB} SHARED
 	src/lapi.c
 	src/lauxlib.c

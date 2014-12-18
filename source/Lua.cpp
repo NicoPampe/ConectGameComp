@@ -8,7 +8,7 @@ extern "C" {
 
 Lua::Lua(const std::string &filename) {
 	L = luaL_newstate();
-	luaL_dofile(L, filename.c_str());	
+	luaL_dofile(L, filename.c_str());
 }
 
 Lua::~Lua() {
@@ -16,6 +16,6 @@ Lua::~Lua() {
 }
 
 template<typename T>
-T load() {
+T Lua::load() {
 	//lua_load(L);
 }
