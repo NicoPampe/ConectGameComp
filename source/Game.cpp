@@ -1,5 +1,6 @@
 #include "Game.hpp"
 #include "OverWorld.hpp"
+#include "Lua.hpp"
 
 #include "Common.hpp"
 
@@ -14,6 +15,10 @@ bool Game::setup() {
 		return false;
 	}
 	overworld_background_.setTexture(overworld_background_texture_);
+
+	Lua map("map2.lua");
+	//map.load();
+	
 
 	sf::Vector2f temp;
 	temp.x = 30;

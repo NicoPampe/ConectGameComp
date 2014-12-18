@@ -21,25 +21,32 @@ else()
 	set(SFML_LIBS ${SFML_GRAPHICS} ${SFML_SYSTEM} ${SFML_WINDOW})
 endif()
 
+set(LUA_LIB lua-5.2)
+
+add_definitions(-DLUA_BUILD_AS_DLL)
+
 add_subdirectory(lua)
 
-include_directories(include)
+include_directories(include lua/src)
 
 add_executable(ConnectGameComp
 		WIN32
 		source/main.cpp
 		source/Game.cpp
 		source/OverWorld.cpp
+		source/Lua.cpp
 
 		include/Common.hpp
 		include/Game.hpp
 		include/OverWorld.hpp
 		include/OverWorldObjects.hpp
+		include/Lua.hpp
 )
 
 target_link_libraries(
 	ConnectGameComp
 	${SFML_LIBS}
+	${LUA_LIB}
 )
 
 add_custom_command(
