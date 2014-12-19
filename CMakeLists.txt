@@ -52,5 +52,5 @@ target_link_libraries(
 add_custom_command(
 	TARGET ConnectGameComp PRE_BUILD
 	COMMAND ${CMAKE_COMMAND} -E copy_directory
-		${CMAKE_SOURCE_DIR}/resources $<TARGET_FILE_DIR:ConnectGameComp>/resources
+		${CMAKE_SOURCE_DIR}/resources ${CMAKE_BINARY_DIR}/resources
 )

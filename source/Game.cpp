@@ -18,7 +18,7 @@ bool Game::setup() {
 
 	Lua map("resources/OverWorldMap.lua");
 	//map.load();
-	
+
 
 	sf::Vector2f temp;
 	temp.x = 30;
@@ -108,10 +108,10 @@ void Game::draw() {
 
 	// Draw the background first, so everthing is drawn ontop of it.
 	window_.draw(overworld_background_);
-	
+
 	// Draw the objects ontop of the background
 	window_.draw(overworld_.tree1_.tree_);
-	
+
 	// Reference point.
 	sf::CircleShape center;
 	center.setRadius(25);
