@@ -1,5 +1,5 @@
 #include "Game.hpp"
-#include "LuaWrapper.hpp"
+#include "LuaScript.hpp"
 #include "OverWorld.hpp"
 
 #include "Common.hpp"
@@ -15,14 +15,6 @@ bool Game::setup() {
 		return false;
 	}
 	overworld_background_.setTexture(overworld_background_texture_);
-
-	LuaWrapper map;
-	map.from_file("resources/OverWorldMap.lua");
-	std::string str[] = {
-		map.load_field("GRASS_D", "texture"),
-		map.load_field("GRASS_D", "walkable"),
-		map.load_field("GRASS_D", "name"),
-	};
 
 	sf::Vector2f temp;
 	temp.x = 30;

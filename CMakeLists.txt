@@ -1,57 +1,51 @@
-cmake_minimum_required (VERSION 2.6)
+cmake_minimum_required (VERSION 2.8)
 project (ConnectGameComp)
 
-# Setup / find SFML libs.
-if(WIN32)
-	set(SFML_LIBS
-		debug sfml-main-d.lib
-		debug sfml-graphics-d.lib
-		debug sfml-window-d.lib
-		debug sfml-system-d.lib
+set(CMAKE_MODULE_PATH ${CMAKE_SOURCE_DIR}/CMake)
 
-		optimized sfml-main.lib
-		optimized sfml-graphics.lib
-		optimized sfml-window.lib
-		optimized sfml-system.lib
-	)
-else()
-	find_library(SFML_GRAPHICS sfml-graphics)
-	find_library(SFML_SYSTEM sfml-system)
-	find_library(SFML_WINDOW sfml-window)
-	set(SFML_LIBS ${SFML_GRAPHICS} ${SFML_SYSTEM} ${SFML_WINDOW})
-endif()
+# Finds the SFML libraries and sets them to SFML_LIBRARYES.
+# Also finds the include directory and sets it to SFML_INCLUDE_DIR.
+find_package(SFML 2 REQUIRED
+	COMPONENTS graphics window system main
+)
 
 set(LUA_LIB lua-5.2)
 
+# We want Lua as a DLL, not static.
 add_definitions(-DLUA_BUILD_AS_DLL)
-
 add_subdirectory(lua)
-add_subdirectory(tests)
 
-include_directories(include lua/src)
+include_directories(
+	include              # Primary include dir for the project
+	lua/src              # Lua headers
+	unnamed_lua_binder   # Lua Wrapper header
+	${SFML_INCLUDE_DIR}  # SFML headers
+)
 
 add_executable(ConnectGameComp
-		WIN32
 		source/main.cpp
 		source/Game.cpp
 		source/OverWorld.cpp
-		source/LuaWrapper.cpp
 
 		include/Common.hpp
 		include/Game.hpp
 		include/OverWorld.hpp
 		include/OverWorldObjects.hpp
-		include/LuaWrapper.hpp
+
+		unnamed_lua_binder/LuaScript.hpp
+		unnamed_lua_binder/LuaScript.cpp
 )
 
 target_link_libraries(
 	ConnectGameComp
-	${SFML_LIBS}
-	${LUA_LIB}
+	${SFML_LIBRARIES}
+	${LUA_LIB}         # Defined in lua/CMakeLists.txt
 )
 
+# Copy the resources over to the CMAKE_BINARY_DIR.
 add_custom_command(
 	TARGET ConnectGameComp PRE_BUILD
 	COMMAND ${CMAKE_COMMAND} -E copy_directory
 		${CMAKE_SOURCE_DIR}/resources ${CMAKE_BINARY_DIR}/resources
 )
+
