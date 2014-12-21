@@ -26,6 +26,7 @@ set(LUA_LIB lua-5.2)
 add_definitions(-DLUA_BUILD_AS_DLL)
 
 add_subdirectory(lua)
+add_subdirectory(tests)
 
 include_directories(include lua/src)
 
@@ -34,13 +35,13 @@ add_executable(ConnectGameComp
 		source/main.cpp
 		source/Game.cpp
 		source/OverWorld.cpp
-		source/Lua.cpp
+		source/LuaWrapper.cpp
 
 		include/Common.hpp
 		include/Game.hpp
 		include/OverWorld.hpp
 		include/OverWorldObjects.hpp
-		include/Lua.hpp
+		include/LuaWrapper.hpp
 )
 
 target_link_libraries(

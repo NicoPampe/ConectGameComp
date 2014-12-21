@@ -1,5 +1,3 @@
-cmake_minimum_required (VERSION 2.6)
-
 add_definitions(
 	-D_CRT_SECURE_NO_WARNINGS
 	-DLUA_BUILD_AS_DLL
@@ -64,9 +62,6 @@ add_library(${LUA_LIB} SHARED
 	src/lvm.h
 	src/lzio.h
 )
-
-get_property(lua_lib_location TARGET ${LUA_LIB} PROPERTY LOCATION)
-message(STATUS "$<TARGET_FILE:${LUA_LIB}>")
 
 add_custom_command(TARGET ${LUA_LIB} POST_BUILD
 	COMMAND ${CMAKE_COMMAND} -E

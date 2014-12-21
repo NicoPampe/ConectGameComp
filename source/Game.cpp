@@ -1,6 +1,6 @@
 #include "Game.hpp"
+#include "LuaWrapper.hpp"
 #include "OverWorld.hpp"
-#include "Lua.hpp"
 
 #include "Common.hpp"
 
@@ -16,9 +16,13 @@ bool Game::setup() {
 	}
 	overworld_background_.setTexture(overworld_background_texture_);
 
-	Lua map("resources/OverWorldMap.lua");
-	//map.load();
-
+	LuaWrapper map;
+	map.from_file("resources/OverWorldMap.lua");
+	std::string str[] = {
+		map.load_field("GRASS_D", "texture"),
+		map.load_field("GRASS_D", "walkable"),
+		map.load_field("GRASS_D", "name"),
+	};
 
 	sf::Vector2f temp;
 	temp.x = 30;
@@ -50,7 +54,7 @@ void Game::start() {
 
 	// The test overworld sprite is 1024x1024.
 	view_.setSize(1024, 1024);
-	view_.zoom(0.3); // uncomment to zoom in
+	view_.zoom(0.3f); // uncomment to zoom in
 	updateView();
 
 	while (running_) {
@@ -78,7 +82,7 @@ void Game::handleEvents() {
 				static_cast<float>(event.size.width),
 				static_cast<float>(event.size.height));
 			view_.setSize(new_size);
-			view_.zoom(0.3);
+			view_.zoom(0.3f);
 		}
 	}
 
