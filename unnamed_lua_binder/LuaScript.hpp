@@ -99,7 +99,7 @@ private:
 
 template <> 
 inline bool LuaScript::lua_get<bool>(const std::string& variableName) {
-    return (bool)lua_toboolean(L, -1);
+    return lua_toboolean(L, -1) != 0;
 }
 
 template <> 
