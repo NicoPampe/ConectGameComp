@@ -1,11 +1,12 @@
 #pragma once
 
-#include "OverWorldObjects.hpp"
-
+#include "OverWorldFigure.hpp"
+#include "Tile.hpp"
 #include "Common.hpp"
 
-// This class is the world that the party can navagate in. The OverWorld will be a gride like layout that the party can move on, from square to square.
-// As they navagate the world, they should interacte with grides around them.
+// This class is the world that the party can navigate in. The OverWorld will be a grid like layout
+//   that the party can move on, from square to square. As they navigate the world, they should
+//   interact with grid-squares around them.
 
 class OverWorld {
 public:
@@ -13,25 +14,27 @@ public:
 	void movePlayer(float dx, float dy);
 
 	// Return the location of the player in the overworld.
-	sf::Vector2f playerPosition();
+	sf::Vector2f playerPosition() const;
 
 	void setBounds(sf::Vector2f min, sf::Vector2f max);
-	sf::Vector2f minBounds();
-	sf::Vector2f maxBounds();
+	sf::Vector2f minBounds() const;
+	sf::Vector2f maxBounds() const;
 
-	// TODO: create a 2D vector or arry to put multiple trees in the overworld
-	Tree tree1_;
+	void render(sf::RenderWindow& window) const;
 
 private:
-	// TODO: Have some sort of player object.
-	
-	// TODO: load objects in the overworld
-	
-	// Start the player in the middle of the board.
-	sf::Vector2f player_ = sf::Vector2f(512, 512);
+	// We special-case the player.
+	OverWorldFigure player_;
+	// All other enemy-player things go in here.
+	std::vector<OverWorldFigure> enemies_;
+	std::vector<Tile> tiles_;
+
+	// When we enter a battle, another mini-screen shows up. There is only one at a time,
+	//   but it's not always active. Thus,
+	BattleScene scene_;
+	bool battle_scene_is_active_ = false;
 
 	sf::Vector2f min_bounds_ = sf::Vector2f(0, 0);
 	sf::Vector2f max_bounds_ = sf::Vector2f(1024, 1024);
-
 };
 

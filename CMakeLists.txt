@@ -24,16 +24,23 @@ include_directories(
 
 add_executable(ConnectGameComp
 		source/main.cpp
+
 		source/Game.cpp
 		source/OverWorld.cpp
 
+		include/BattleScene.hpp
+		include/BoardFigure.hpp
 		include/Common.hpp
 		include/Game.hpp
+		include/Lua.hpp
 		include/OverWorld.hpp
-		include/OverWorldObjects.hpp
+		include/OverWorldFigure.hpp
+		include/PartyFigure.hpp
+		include/SpriteManager.hpp
+		include/Tile.hpp
 
-		unnamed_lua_binder/LuaScript.hpp
 		unnamed_lua_binder/LuaScript.cpp
+		unnamed_lua_binder/LuaScript.hpp
 )
 
 target_link_libraries(
