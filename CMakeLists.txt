@@ -32,7 +32,6 @@ add_executable(ConnectGameComp
 		include/BoardFigure.hpp
 		include/Common.hpp
 		include/Game.hpp
-		include/Lua.hpp
 		include/OverWorld.hpp
 		include/OverWorldFigure.hpp
 		include/PartyFigure.hpp

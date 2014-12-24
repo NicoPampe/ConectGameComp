@@ -1,5 +1,7 @@
 #pragma once
 
+#include "OverWorldFigure.hpp"
+
 class BattleScene {
 private:
 	// Should these be references?

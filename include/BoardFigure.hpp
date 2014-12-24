@@ -6,12 +6,19 @@
 class BoardFigure {
 public:
 	// Inherited destructors *must* be virtual, or else undefined behavior.
-	virtual ~BoardFigure();
+	virtual ~BoardFigure() {}
 
-	virtual void render(sf::RenderWindow& window) const;
+	//virtual void draw(sf::RenderWindow& window) const;
+
+	void setPosition(float x, float y) {
+		position_ = sf::Vector2f(x, y);
+	}
+	sf::Vector2f position() const {
+		return position_;
+	}
 
 protected:
-	sf::Vector2i position_;
+	sf::Vector2f position_;
 	Direction facing = Direction::Down;
 	SpriteManager sprites_;
 };

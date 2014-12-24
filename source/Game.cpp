@@ -16,20 +16,6 @@ bool Game::setup() {
 	}
 	overworld_background_.setTexture(overworld_background_texture_);
 
-	sf::Vector2f temp;
-	temp.x = 30;
-	temp.y = 30;
-	overworld_.tree1_.set_tree_position_(temp);
-	overworld_.tree1_.set_texture_();
-
-	//if (!overworld_tree_texture_.loadFromFile("Tree1.png")) {
-	//	// Something went wrong loading the texture.
-	//	return false;
-	//}
-	//overworld_trees_.setTexture(overworld_tree_texture_);
-	//Tree tree_temp_;
-	//tree_temp_;
-
 	return true;
 }
 
@@ -106,7 +92,6 @@ void Game::draw() {
 	window_.draw(overworld_background_);
 
 	// Draw the objects ontop of the background
-	window_.draw(overworld_.tree1_.tree_);
 
 	// Reference point.
 	sf::CircleShape center;

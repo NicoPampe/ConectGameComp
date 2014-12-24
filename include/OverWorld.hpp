@@ -1,5 +1,6 @@
 #pragma once
 
+#include "BattleScene.hpp"
 #include "OverWorldFigure.hpp"
 #include "Tile.hpp"
 #include "Common.hpp"
