@@ -1,7 +1,5 @@
 #include "OverWorld.hpp"
 
-#include <iostream> // temp include just to view values
-
 void OverWorld::movePlayer(float dx, float dy) {
 	float player_x = player_.position().x + dx;
 	float player_y = player_.position().y + dy;
@@ -26,8 +24,9 @@ void OverWorld::movePlayer(float dx, float dy) {
 
 	player_.setPosition(player_x, player_y);
 
-	// TODO: Add generic collision.
-	/*
+	// TODO: Add generic collision. This code should be spearated into a function and we'll be 
+	//   good to go.
+#if 0
 	sf::FloatRect tree_box = tree1_.tree_.getGlobalBounds();
 	auto player_box = sf::FloatRect(player_, sf::Vector2f(player_size.x, player_size.y));
 	if (tree_box.intersects(player_box)) {
@@ -55,13 +54,9 @@ void OverWorld::movePlayer(float dx, float dy) {
 			// dy == 0, there's nothing to do.
 		}
 	}
-	*/
+#endif
 }
 
 sf::Vector2f OverWorld::playerPosition() const {
-	auto pos = player_.position();
-	return sf::Vector2f(
-		static_cast<float>(pos.x),
-		static_cast<float>(pos.y)
-	);
+	return player_.position();
 }

@@ -26,7 +26,13 @@ add_executable(ConnectGameComp
 		source/main.cpp
 
 		source/Game.cpp
+		source/BattleScene.cpp
+		source/BoardFigure.cpp
+		source/Game.cpp
 		source/OverWorld.cpp
+		source/OverWorldFigure.cpp
+		source/PartyFigure.cpp
+		source/SpriteManager.cpp
 
 		include/BattleScene.hpp
 		include/BoardFigure.hpp
@@ -54,4 +60,3 @@ add_custom_command(
 	COMMAND ${CMAKE_COMMAND} -E copy_directory
 		${CMAKE_SOURCE_DIR}/resources ${CMAKE_BINARY_DIR}/resources
 )
-

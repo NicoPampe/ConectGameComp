@@ -5,6 +5,10 @@
 #include "Common.hpp"
 
 bool Game::setup() {
+
+	SpriteManager link_sprites 
+		= load_link_sprites("images/Zelda_Links_Awakening_SpriteSheet-Correction.psd");
+
 	// These dimensions are based off of our test-overworld.
 	player_.setSize(sf::Vector2f(20, 25));
 	// This is a dark-ish green intended to resemble Link.
@@ -23,6 +27,7 @@ void Game::start() {
 	// Setup the window and attach the view.
 	window_.create(
 		// The test overworld sprite is 1024x1024.
+		// TODO: Make this load settings from a file. Do that in setup().
 		sf::VideoMode(1024, 1024),
 		"CS Connect Game!",
 		sf::Style::Default
@@ -64,19 +69,17 @@ void Game::handleEvents() {
 		}
 	}
 
-	const float move_speed = 0.4f;
-
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right)) {
-		overworld_.movePlayer(move_speed, 0);
+		overworld_.movePlayer(Direction::Right);
 	}
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left)) {
-		overworld_.movePlayer(-move_speed, 0);
+		overworld_.movePlayer(Direction::Left);
 	}
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down)) {
-		overworld_.movePlayer(0, move_speed);
+		overworld_.movePlayer(Direction::Down);
 	}
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up)) {
-		overworld_.movePlayer(0, -move_speed);
+		overworld_.movePlayer(Direction::Up);
 	}
 }
 
@@ -88,19 +91,16 @@ void Game::update() {
 void Game::draw() {
 	window_.clear(sf::Color::Black);
 
-	// Draw the background first, so everthing is drawn ontop of it.
-	window_.draw(overworld_background_);
+	overworld_.draw(window_);
 
-	// Draw the objects ontop of the background
-
-	// Reference point.
+	// Reference point at the origin.
 	sf::CircleShape center;
-	center.setRadius(25);
-	center.move(-25, -25);
+	const float radius = 10;
+	center.setRadius(radius);
+	// It's starting position has the top left corner at 0, 0. We want it centered there.
+	center.move(-radius, -radius);
 	window_.draw(center);
 
-	// Draw the player last, so that they are on top.
-	window_.draw(player_);
 	window_.display();
 }
 
@@ -109,4 +109,58 @@ void Game::draw() {
 void Game::updateView() {
 	view_.setCenter(overworld_.playerPosition());
 	window_.setView(view_);
+}
+
+SpriteManager Game::load_link_sprites(const std::string& sprite_sheet_filename) {
+	sf::Image sprite_sheet;
+	sprite_sheet.loadFromFile(sprite_sheet_filename);
+
+	SpriteManager link_sprites;
+	link_sprites.add_sprite_from_sheet(
+		sprite_sheet, "North Base Texture", sf::IntRect(66, 6, 14, 16));
+	link_sprites.add_sprite_from_sheet(
+		sprite_sheet, "North Walk Texture", sf::IntRect(80, 6, 14, 16));
+
+	link_sprites.add_sprite_from_sheet(
+		sprite_sheet, "South Base Texture", sf::IntRect(36, 6, 14, 16));
+	link_sprites.add_sprite_from_sheet(
+		sprite_sheet, "South Walk Texture", sf::IntRect(51, 6, 14, 16));
+
+	link_sprites.add_sprite_from_sheet(
+		sprite_sheet, "West Base Texture", sf::IntRect(5, 6, 14, 16));
+	link_sprites.add_sprite_from_sheet(
+		sprite_sheet, "West Walk Texture", sf::IntRect(21, 6, 14, 16));
+
+	link_sprites.add_sprite_from_sheet(
+		sprite_sheet, "East Base Texture", sf::IntRect(109, 6, 14, 16));
+	link_sprites.add_sprite_from_sheet(
+		sprite_sheet, "East Walk Texture", sf::IntRect(94, 6, 14, 16));
+
+	link_sprites.add_sprite_from_sheet(
+		sprite_sheet, "East Hit Texture 1", sf::IntRect(41, 107, 15, 31));
+	link_sprites.add_sprite_from_sheet(
+		sprite_sheet, "East Hit Texture 2", sf::IntRect(63, 107, 27, 31));
+	link_sprites.add_sprite_from_sheet(
+		sprite_sheet, "East Hit Texture 3", sf::IntRect(94, 107, 30, 31));
+
+	link_sprites.add_sprite_from_sheet(
+		sprite_sheet, "West Hit Texture 1", sf::IntRect(197, 107, 15, 31));
+	link_sprites.add_sprite_from_sheet(
+		sprite_sheet, "West Hit Texture 2", sf::IntRect(164, 107, 27, 31));
+	link_sprites.add_sprite_from_sheet(
+		sprite_sheet, "West Hit Texture 3", sf::IntRect(130, 107, 30, 31));
+
+	link_sprites.add_sprite_from_sheet(
+		sprite_sheet, "South Hit Texture 1", sf::IntRect(31, 145, 30, 32));
+	link_sprites.add_sprite_from_sheet(
+		sprite_sheet, "South Hit Texture 2", sf::IntRect(69, 145, 26, 32));
+	link_sprites.add_sprite_from_sheet(
+		sprite_sheet, "South Hit Texture 3", sf::IntRect(102, 145, 15, 32));
+
+	link_sprites.add_sprite_from_sheet(
+		sprite_sheet, "North Hit Texture 1", sf::IntRect(130, 145, 15, 32));
+	link_sprites.add_sprite_from_sheet(
+		sprite_sheet, "North Hit Texture 2", sf::IntRect(153, 145, 26, 32));
+	link_sprites.add_sprite_from_sheet(
+		sprite_sheet, "North Hit Texture 3", sf::IntRect(183, 145, 30, 32));
 }

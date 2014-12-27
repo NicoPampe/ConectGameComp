@@ -14,4 +14,7 @@ enum class Direction {
 	Right
 };
 
-#include <vector>
+// TODO: Add logging to this macro?
+
+// If expr is false, return false. Otherwise, carry on. Used to simplify some error handling.
+#define return_on_fail(expr) if ((expr)) { return false; }

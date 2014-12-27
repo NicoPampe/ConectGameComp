@@ -2,9 +2,10 @@
 
 #include "OverWorldFigure.hpp"
 
+// The class which manages the combat. When active, we pause the OverWorld and begin rendering
+//   ontop of it. This is the meat and bones of the game. 
 class BattleScene {
 private:
-	// Should these be references?
 	OverWorldFigure player_;
 	OverWorldFigure enemy_;
 
@@ -12,5 +13,5 @@ private:
 		Left,
 		Right
 	};
-	Side player_side;
+	Side player_side_;
 };

@@ -3,22 +3,24 @@
 #include "SpriteManager.hpp"
 #include "Common.hpp"
 
+// The parent class for anything which needs to move about a grid board.
 class BoardFigure {
 public:
 	// Inherited destructors *must* be virtual, or else undefined behavior.
+
 	virtual ~BoardFigure() {}
 
-	//virtual void draw(sf::RenderWindow& window) const;
+	virtual void draw(sf::RenderWindow& window) const;
 
-	void setPosition(float x, float y) {
-		position_ = sf::Vector2f(x, y);
+	void setPosition(int x, int y) {
+		position_ = sf::Vector2i(x, y);
 	}
-	sf::Vector2f position() const {
+	sf::Vector2i position() const {
 		return position_;
 	}
 
 protected:
-	sf::Vector2f position_;
+	sf::Vector2i position_;
 	Direction facing = Direction::Down;
 	SpriteManager sprites_;
 };
