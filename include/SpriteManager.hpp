@@ -10,7 +10,13 @@ public:
 	SpriteManager(const SpriteManager&) = delete;
 	SpriteManager& operator=(const SpriteManager& other) = delete;
 	
-	SpriteManager() = default;
+	SpriteManager() {
+		// It's very, very important that this doesn't resize. Ever.
+		// Otherwise, it invalidates every sprite object depending on these textures.
+		// We reserve an obscene amount of space and hope for the best.
+		textures_.reserve(500);
+	}
+
 	SpriteManager& operator=(SpriteManager&& other) {
 		textures_       = std::move(other.textures_);
 		current_sprite_ = std::move(other.current_sprite_);

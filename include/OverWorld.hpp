@@ -12,7 +12,7 @@ public:
 	OverWorld() {}
 
 	// Move the player along gridlines.
-	void movePlayer(Direction direction) {}
+	void movePlayer(Direction direction);
 
 	// The location of the player in the grid-world.
 	sf::Vector2i playerPosition() const {
@@ -52,6 +52,6 @@ private:
 	sf::Vector2f min_bounds_ = sf::Vector2f(0, 0);
 
 	// Maximum x and y values allowed by anything (Tiles, OverWorldFigures) in the OverWorld.
-	sf::Vector2f max_bounds_ = sf::Vector2f(1024, 1024);
+	sf::Vector2f max_bounds_ = sf::Vector2f(300, 300);
 };
 
