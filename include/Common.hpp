@@ -14,7 +14,16 @@ enum class Direction {
 	Right
 };
 
+// If expr is false, return value. Otherwise, carry on. Used to simplify some error handling.
 // TODO: Add logging to this macro?
+#define return_on_fail(expr, value) if ((expr)) { return (value); }
 
-// If expr is false, return false. Otherwise, carry on. Used to simplify some error handling.
-#define return_on_fail(expr) if ((expr)) { return false; }
+// Convert from sf::Vector2i to sf::Vector2f with static casts.
+inline sf::Vector2f v2i_to_v2f(sf::Vector2i vec) {
+	return sf::Vector2f(
+		static_cast<float>(vec.x),
+		static_cast<float>(vec.y));
+}
+
+// It's nice to have std::endl for sf::err().
+#include <iostream>

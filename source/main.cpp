@@ -10,6 +10,7 @@ int main() {
 
 	if (!game.setup()) {
 		// Something went wrong setting up the game. Likely some files didn't load.
+		std::cerr << "Game setup failed. Aborting." << std::endl;
 		return 1;
 	}
 

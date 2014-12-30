@@ -32,7 +32,9 @@ public:
 
 private:
 	// Load the sprites from the Links Awakening sprite sheet from sfmlzelda.
-	SpriteManager Game::load_link_sprites(const std::string& sprite_sheet_filename);
+	// Return true if there were no issues.
+	bool Game::load_link_sprites(const std::string& sprite_sheet_filename,
+		                         SpriteManager& link_sprites);
 
 	// Center view_ on the player and re-attach it to window_.
 	// This must be called anytime view_ is moved.

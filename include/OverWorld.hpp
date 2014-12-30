@@ -9,14 +9,22 @@
 //   with OverWorldFigures moving along integral cooridnates.
 class OverWorld {
 public:
+	OverWorld() {}
+
 	// Move the player along gridlines.
-	void movePlayer(Direction direction);
+	void movePlayer(Direction direction) {}
 
 	// The location of the player in the grid-world.
-	sf::Vector2i playerPosition() const;
+	sf::Vector2i playerPosition() const {
+		return player_.position();
+	}
 
 	// Draw the entire overworld, its OverWorldFigures, etc. Everything.
 	void draw(sf::RenderWindow& window) const;
+
+	void setPlayerSprites(SpriteManager&& sprites) {
+		player_.setSprites(std::move(sprites));
+	}
 
 private:
 	OverWorldFigure player_;

@@ -5,20 +5,17 @@
 #include "Common.hpp"
 
 bool Game::setup() {
+	const std::string link_filename
+		= "resources/images/Zelda_Links_Awakening_SpriteSheet-Correction.psd";
 
-	SpriteManager link_sprites 
-		= load_link_sprites("images/Zelda_Links_Awakening_SpriteSheet-Correction.psd");
-
-	// These dimensions are based off of our test-overworld.
-	player_.setSize(sf::Vector2f(20, 25));
-	// This is a dark-ish green intended to resemble Link.
-	player_.setFillColor(sf::Color(0x00, 0x66, 0x00));
-
-	if (!overworld_background_texture_.loadFromFile("resources/TestOverworld.png")) {
-		// Something went wrong loading the texture.
+	SpriteManager link_sprites;
+	if (!load_link_sprites(link_filename, link_sprites)) {
 		return false;
 	}
-	overworld_background_.setTexture(overworld_background_texture_);
+
+	// Start our player facing south.
+	link_sprites.setCurrent("South Base");
+	overworld_.setPlayerSprites(std::move(link_sprites));
 
 	return true;
 }
@@ -33,11 +30,11 @@ void Game::start() {
 		sf::Style::Default
 		);
 
-	view_.setCenter(overworld_.playerPosition());
+	view_.setCenter(v2i_to_v2f(overworld_.playerPosition()));
 
 	// The test overworld sprite is 1024x1024.
 	view_.setSize(1024, 1024);
-	view_.zoom(0.3f); // uncomment to zoom in
+	view_.zoom(0.3f); // uncomment to zoom out
 	updateView();
 
 	while (running_) {
@@ -56,10 +53,7 @@ void Game::handleEvents() {
 			running_ = false;
 			window_.close();
 		}
-		if (event.key.code == sf::Keyboard::Space
-			&& event.type == sf::Event::KeyPressed) {
-			player_.rotate(15);
-		}
+
 		if (event.type == sf::Event::Resized) {
 			auto new_size = sf::Vector2f(
 				static_cast<float>(event.size.width),
@@ -84,14 +78,11 @@ void Game::handleEvents() {
 }
 
 void Game::update() {
-	player_.setPosition(overworld_.playerPosition());
 	updateView();
 }
 
 void Game::draw() {
 	window_.clear(sf::Color::Black);
-
-	overworld_.draw(window_);
 
 	// Reference point at the origin.
 	sf::CircleShape center;
@@ -99,7 +90,11 @@ void Game::draw() {
 	center.setRadius(radius);
 	// It's starting position has the top left corner at 0, 0. We want it centered there.
 	center.move(-radius, -radius);
+	// When textures don't load properly, they're white. Let's make this blue so it stands out.
+	center.setFillColor(sf::Color::Blue);
 	window_.draw(center);
+
+	overworld_.draw(window_);
 
 	window_.display();
 }
@@ -107,60 +102,88 @@ void Game::draw() {
 // Private methods
 
 void Game::updateView() {
-	view_.setCenter(overworld_.playerPosition());
+	view_.setCenter(v2i_to_v2f(overworld_.playerPosition()));
 	window_.setView(view_);
 }
 
-SpriteManager Game::load_link_sprites(const std::string& sprite_sheet_filename) {
+bool Game::load_link_sprites(const std::string& sprite_sheet_filename,
+	                                  SpriteManager& link_sprites) {
 	sf::Image sprite_sheet;
-	sprite_sheet.loadFromFile(sprite_sheet_filename);
+	if (!sprite_sheet.loadFromFile(sprite_sheet_filename)) {
+		return false;
+	}
 
-	SpriteManager link_sprites;
-	link_sprites.add_sprite_from_sheet(
-		sprite_sheet, "North Base Texture", sf::IntRect(66, 6, 14, 16));
-	link_sprites.add_sprite_from_sheet(
-		sprite_sheet, "North Walk Texture", sf::IntRect(80, 6, 14, 16));
+	// All the if-conditions fit in 100 columns now!
+	using rect = sf::IntRect;
 
-	link_sprites.add_sprite_from_sheet(
-		sprite_sheet, "South Base Texture", sf::IntRect(36, 6, 14, 16));
-	link_sprites.add_sprite_from_sheet(
-		sprite_sheet, "South Walk Texture", sf::IntRect(51, 6, 14, 16));
+	if (!link_sprites.add_sprite_from_sheet(sprite_sheet, "North Base", rect(66, 6, 14, 16))) {
+		// Failed to load, abort!
+		return false;
+	}
+	if (!link_sprites.add_sprite_from_sheet(sprite_sheet, "North Walk", rect(80, 6, 14, 16))) {
+		return false;
+	}
 
-	link_sprites.add_sprite_from_sheet(
-		sprite_sheet, "West Base Texture", sf::IntRect(5, 6, 14, 16));
-	link_sprites.add_sprite_from_sheet(
-		sprite_sheet, "West Walk Texture", sf::IntRect(21, 6, 14, 16));
+	if (!link_sprites.add_sprite_from_sheet(sprite_sheet, "South Base", rect(36, 6, 14, 16))) {
+		return false;
+	}
+	if (!link_sprites.add_sprite_from_sheet(sprite_sheet, "South Walk", rect(51, 6, 14, 16))) {
+		return false;
+	}
 
-	link_sprites.add_sprite_from_sheet(
-		sprite_sheet, "East Base Texture", sf::IntRect(109, 6, 14, 16));
-	link_sprites.add_sprite_from_sheet(
-		sprite_sheet, "East Walk Texture", sf::IntRect(94, 6, 14, 16));
+	if (!link_sprites.add_sprite_from_sheet(sprite_sheet, "West Base", rect(5, 6, 14, 16))) {
+		return false;
+	}
+	if (!link_sprites.add_sprite_from_sheet(sprite_sheet, "West Walk", rect(21, 6, 14, 16))) {
+		return false;
+	}
 
-	link_sprites.add_sprite_from_sheet(
-		sprite_sheet, "East Hit Texture 1", sf::IntRect(41, 107, 15, 31));
-	link_sprites.add_sprite_from_sheet(
-		sprite_sheet, "East Hit Texture 2", sf::IntRect(63, 107, 27, 31));
-	link_sprites.add_sprite_from_sheet(
-		sprite_sheet, "East Hit Texture 3", sf::IntRect(94, 107, 30, 31));
+	if (!link_sprites.add_sprite_from_sheet(sprite_sheet, "East Base", rect(109, 6, 14, 16))) {
+		return false;
+	}
+	if (!link_sprites.add_sprite_from_sheet(sprite_sheet, "East Walk", rect(94, 6, 14, 16))) {
+		return false;
+	}
 
-	link_sprites.add_sprite_from_sheet(
-		sprite_sheet, "West Hit Texture 1", sf::IntRect(197, 107, 15, 31));
-	link_sprites.add_sprite_from_sheet(
-		sprite_sheet, "West Hit Texture 2", sf::IntRect(164, 107, 27, 31));
-	link_sprites.add_sprite_from_sheet(
-		sprite_sheet, "West Hit Texture 3", sf::IntRect(130, 107, 30, 31));
+	if (!link_sprites.add_sprite_from_sheet(sprite_sheet, "East Hit 1", rect(41, 107, 15, 31))) {
+		return false;
+	}
+	if (!link_sprites.add_sprite_from_sheet(sprite_sheet, "East Hit 2", rect(63, 107, 27, 31))) {
+		return false;
+	}
+	if (!link_sprites.add_sprite_from_sheet(sprite_sheet, "East Hit 3", rect(94, 107, 30, 31))) {
+		return false;
+	}
 
-	link_sprites.add_sprite_from_sheet(
-		sprite_sheet, "South Hit Texture 1", sf::IntRect(31, 145, 30, 32));
-	link_sprites.add_sprite_from_sheet(
-		sprite_sheet, "South Hit Texture 2", sf::IntRect(69, 145, 26, 32));
-	link_sprites.add_sprite_from_sheet(
-		sprite_sheet, "South Hit Texture 3", sf::IntRect(102, 145, 15, 32));
+	if (!link_sprites.add_sprite_from_sheet(sprite_sheet, "West Hit 1", rect(197, 107, 15, 31))) {
+		return false;
+	}
+	if (!link_sprites.add_sprite_from_sheet(sprite_sheet, "West Hit 2", rect(164, 107, 27, 31))) {
+		return false;
+	}
+	if (!link_sprites.add_sprite_from_sheet(sprite_sheet, "West Hit 3", rect(130, 107, 30, 31))) {
+		return false;
+	}
 
-	link_sprites.add_sprite_from_sheet(
-		sprite_sheet, "North Hit Texture 1", sf::IntRect(130, 145, 15, 32));
-	link_sprites.add_sprite_from_sheet(
-		sprite_sheet, "North Hit Texture 2", sf::IntRect(153, 145, 26, 32));
-	link_sprites.add_sprite_from_sheet(
-		sprite_sheet, "North Hit Texture 3", sf::IntRect(183, 145, 30, 32));
+	if (!link_sprites.add_sprite_from_sheet(sprite_sheet, "South Hit 1", rect(31, 145, 30, 32))) {
+		return false;
+	}
+	if (!link_sprites.add_sprite_from_sheet(sprite_sheet, "South Hit 2", rect(69, 145, 26, 32))) {
+		return false;
+	}
+	if (!link_sprites.add_sprite_from_sheet(sprite_sheet, "South Hit 3", rect(102, 145, 15, 32))) {
+		return false;
+	}
+
+	if (!link_sprites.add_sprite_from_sheet(sprite_sheet, "North Hit 1", rect(130, 145, 15, 32))) {
+		return false;
+	}
+	if (!link_sprites.add_sprite_from_sheet(sprite_sheet, "North Hit 2", rect(153, 145, 26, 32))) {
+		return false;
+	}
+	if (!link_sprites.add_sprite_from_sheet(sprite_sheet, "North Hit 3", rect(183, 145, 30, 32))) {
+		return false;
+	}
+
+	return true;
 }

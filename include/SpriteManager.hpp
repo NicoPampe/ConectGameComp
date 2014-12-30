@@ -6,22 +6,42 @@
 
 class SpriteManager {
 public:
-	// Return True when we succeed in loading the sprite.
+	// Copying a SpriteManager messes up textures_. Don't do it.
+	SpriteManager(const SpriteManager&) = delete;
+	SpriteManager& operator=(const SpriteManager& other) = delete;
+	
+	SpriteManager() = default;
+	SpriteManager& operator=(SpriteManager&& other) {
+		textures_       = std::move(other.textures_);
+		current_sprite_ = std::move(other.current_sprite_);
+		sprite_map_     = std::move(other.sprite_map_);
+		return *this;
+	}
+
+	// Return true when we succeed in loading the sprite.
 	bool add_sprite_from_sheet(const sf::Image& sprite_sheet,
 	                           const std::string& name,
 	                           const sf::IntRect& area);
 
 	// Retrieve a sprite by name.
-	const sf::Sprite& get_sprite(const std::string& name) const;
+	sf::Sprite get_sprite(const std::string& name) const;
+
+	void setCurrent(const std::string& name) {
+		current_sprite_ = get_sprite(name);
+	}
+
+	const sf::Sprite& getCurrent() const {
+		return current_sprite_;
+	}
 
 private:
 	// It's only important that the textures live as long as the sprites.
 	// We won't be accessing them later, so we don't care where they go. Just as long as they live.
 	std::vector<sf::Texture> textures_;
 
-	// Return this sprite whenever we can't find a specific sprite.
-	// TODO: Find something useful for this. An empty sprite may make debugging difficult.
-	sf::Sprite error_sprite_;
+	// The sprite which this object's owner is currently using. Might be worth using
+	//   in animations.
+	sf::Sprite current_sprite_;
 
 	std::unordered_map<std::string, sf::Sprite> sprite_map_;
 	
