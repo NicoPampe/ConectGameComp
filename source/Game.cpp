@@ -4,6 +4,8 @@
 
 #include "Common.hpp"
 
+#include <ctime>
+
 bool Game::setup() {
 	// These dimensions are based off of our test-overworld.
 	player_.setSize(sf::Vector2f(20, 25));
@@ -67,7 +69,35 @@ void Game::handleEvents() {
 		}
 		if (event.key.code == sf::Keyboard::Space
 			&& event.type == sf::Event::KeyPressed) {
-			player_.rotate(15);
+			// 3 types of animations for rotating the player
+			/***** THIS CODE IS TEMP. *******/
+			unsigned flash_time = 0;
+			unsigned flash_interval = 30; // change this to vary flash animation
+			
+			for (int i = 0; i < 3; i++)
+			{
+				if (i == 0) {
+					player_.rotate(15);
+				}
+				if (i == 1) {
+					player_.rotate(30);
+				}
+				if (i == 2) {
+					player_.rotate(-5);
+				}
+
+				std::time_t start = std::time(0);
+				//while (std::difftime(std::time(0), start) < 1);
+				//rest(50);
+				//_sleep(1000);
+			}
+			//player_.rotate(20);
+			//// add some kind of pause
+			//player_.rotate(20);
+			//// add pause
+			//player_.rotate(20);
+			//// add pause
+			//player_.rotate(20);
 		}
 		if (event.type == sf::Event::Resized) {
 			auto new_size = sf::Vector2f(
@@ -76,22 +106,38 @@ void Game::handleEvents() {
 			view_.setSize(new_size);
 			view_.zoom(0.3f);
 		}
+
+		const int move_space = 40;
+
+		if (event.key.code == sf::Keyboard::Right && event.type == sf::Event::KeyPressed) {
+			overworld_.movePlayer(move_space, 0);
+		}
+		if (event.key.code == sf::Keyboard::Left && event.type == sf::Event::KeyPressed) {
+			overworld_.movePlayer(-move_space, 0);
+		}
+		if (event.key.code == sf::Keyboard::Up && event.type == sf::Event::KeyPressed) {
+			overworld_.movePlayer(0, -move_space);
+		}
+		if (event.key.code == sf::Keyboard::Down && event.type == sf::Event::KeyPressed) {
+			overworld_.movePlayer(0, move_space);
+			
+		}
 	}
 
 	const float move_speed = 0.4f;
 
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right)) {
-		overworld_.movePlayer(move_speed, 0);
-	}
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left)) {
+	//if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right)) {
+		//overworld_.movePlayer(move_speed, 0);
+	//}
+	/*if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left)) {
 		overworld_.movePlayer(-move_speed, 0);
-	}
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down)) {
+	}*/
+	/*if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down)) {
 		overworld_.movePlayer(0, move_speed);
 	}
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up)) {
 		overworld_.movePlayer(0, -move_speed);
-	}
+	}*/
 }
 
 void Game::update() {
