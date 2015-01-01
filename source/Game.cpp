@@ -116,72 +116,72 @@ bool Game::load_link_sprites(const std::string& sprite_sheet_filename,
 	// All the if-conditions fit in 100 columns now!
 	using rect = sf::IntRect;
 
-	if (!link_sprites.add_sprite_from_sheet(sprite_sheet, "North Base", rect(66, 6, 14, 16))) {
+	if (!link_sprites.addSpriteFromSheet(sprite_sheet, "North Base", rect(66, 6, 14, 16))) {
 		// Failed to load, abort!
 		return false;
 	}
-	if (!link_sprites.add_sprite_from_sheet(sprite_sheet, "North Walk", rect(80, 6, 14, 16))) {
+	if (!link_sprites.addSpriteFromSheet(sprite_sheet, "North Walk", rect(80, 6, 14, 16))) {
 		return false;
 	}
 
-	if (!link_sprites.add_sprite_from_sheet(sprite_sheet, "South Base", rect(36, 6, 14, 16))) {
+	if (!link_sprites.addSpriteFromSheet(sprite_sheet, "South Base", rect(36, 6, 14, 16))) {
 		return false;
 	}
-	if (!link_sprites.add_sprite_from_sheet(sprite_sheet, "South Walk", rect(51, 6, 14, 16))) {
-		return false;
-	}
-
-	if (!link_sprites.add_sprite_from_sheet(sprite_sheet, "West Base", rect(5, 6, 14, 16))) {
-		return false;
-	}
-	if (!link_sprites.add_sprite_from_sheet(sprite_sheet, "West Walk", rect(21, 6, 14, 16))) {
+	if (!link_sprites.addSpriteFromSheet(sprite_sheet, "South Walk", rect(51, 6, 14, 16))) {
 		return false;
 	}
 
-	if (!link_sprites.add_sprite_from_sheet(sprite_sheet, "East Base", rect(109, 6, 14, 16))) {
+	if (!link_sprites.addSpriteFromSheet(sprite_sheet, "West Base", rect(5, 6, 14, 16))) {
 		return false;
 	}
-	if (!link_sprites.add_sprite_from_sheet(sprite_sheet, "East Walk", rect(94, 6, 14, 16))) {
-		return false;
-	}
-
-	if (!link_sprites.add_sprite_from_sheet(sprite_sheet, "East Hit 1", rect(41, 107, 15, 31))) {
-		return false;
-	}
-	if (!link_sprites.add_sprite_from_sheet(sprite_sheet, "East Hit 2", rect(63, 107, 27, 31))) {
-		return false;
-	}
-	if (!link_sprites.add_sprite_from_sheet(sprite_sheet, "East Hit 3", rect(94, 107, 30, 31))) {
+	if (!link_sprites.addSpriteFromSheet(sprite_sheet, "West Walk", rect(21, 6, 14, 16))) {
 		return false;
 	}
 
-	if (!link_sprites.add_sprite_from_sheet(sprite_sheet, "West Hit 1", rect(197, 107, 15, 31))) {
+	if (!link_sprites.addSpriteFromSheet(sprite_sheet, "East Base", rect(109, 6, 14, 16))) {
 		return false;
 	}
-	if (!link_sprites.add_sprite_from_sheet(sprite_sheet, "West Hit 2", rect(164, 107, 27, 31))) {
-		return false;
-	}
-	if (!link_sprites.add_sprite_from_sheet(sprite_sheet, "West Hit 3", rect(130, 107, 30, 31))) {
+	if (!link_sprites.addSpriteFromSheet(sprite_sheet, "East Walk", rect(94, 6, 14, 16))) {
 		return false;
 	}
 
-	if (!link_sprites.add_sprite_from_sheet(sprite_sheet, "South Hit 1", rect(31, 145, 30, 32))) {
+	if (!link_sprites.addSpriteFromSheet(sprite_sheet, "East Hit 1", rect(41, 107, 15, 31))) {
 		return false;
 	}
-	if (!link_sprites.add_sprite_from_sheet(sprite_sheet, "South Hit 2", rect(69, 145, 26, 32))) {
+	if (!link_sprites.addSpriteFromSheet(sprite_sheet, "East Hit 2", rect(63, 107, 27, 31))) {
 		return false;
 	}
-	if (!link_sprites.add_sprite_from_sheet(sprite_sheet, "South Hit 3", rect(102, 145, 15, 32))) {
+	if (!link_sprites.addSpriteFromSheet(sprite_sheet, "East Hit 3", rect(94, 107, 30, 31))) {
 		return false;
 	}
 
-	if (!link_sprites.add_sprite_from_sheet(sprite_sheet, "North Hit 1", rect(130, 145, 15, 32))) {
+	if (!link_sprites.addSpriteFromSheet(sprite_sheet, "West Hit 1", rect(197, 107, 15, 31))) {
 		return false;
 	}
-	if (!link_sprites.add_sprite_from_sheet(sprite_sheet, "North Hit 2", rect(153, 145, 26, 32))) {
+	if (!link_sprites.addSpriteFromSheet(sprite_sheet, "West Hit 2", rect(164, 107, 27, 31))) {
 		return false;
 	}
-	if (!link_sprites.add_sprite_from_sheet(sprite_sheet, "North Hit 3", rect(183, 145, 30, 32))) {
+	if (!link_sprites.addSpriteFromSheet(sprite_sheet, "West Hit 3", rect(130, 107, 30, 31))) {
+		return false;
+	}
+
+	if (!link_sprites.addSpriteFromSheet(sprite_sheet, "South Hit 1", rect(31, 145, 30, 32))) {
+		return false;
+	}
+	if (!link_sprites.addSpriteFromSheet(sprite_sheet, "South Hit 2", rect(69, 145, 26, 32))) {
+		return false;
+	}
+	if (!link_sprites.addSpriteFromSheet(sprite_sheet, "South Hit 3", rect(102, 145, 15, 32))) {
+		return false;
+	}
+
+	if (!link_sprites.addSpriteFromSheet(sprite_sheet, "North Hit 1", rect(130, 145, 15, 32))) {
+		return false;
+	}
+	if (!link_sprites.addSpriteFromSheet(sprite_sheet, "North Hit 2", rect(153, 145, 26, 32))) {
+		return false;
+	}
+	if (!link_sprites.addSpriteFromSheet(sprite_sheet, "North Hit 3", rect(183, 145, 30, 32))) {
 		return false;
 	}
 

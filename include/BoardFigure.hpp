@@ -11,7 +11,7 @@ public:
 	virtual ~BoardFigure() {}
 
 	virtual void draw(sf::RenderWindow& window) const {
-		sf::Sprite sprite = sprites_.getCurrent();
+		sf::Sprite sprite = sprites_.current();
 		sprite.setPosition(v2i_to_v2f(position_));
 		window.draw(sprite);
 	}
@@ -24,8 +24,8 @@ public:
 		return position_;
 	}
 
-	void setSprites(SpriteManager&& sprites) {
-		sprites_ = std::move(sprites);
+	void setSprites(const SpriteManager& sprites) {
+		sprites_ = sprites;
 	}
 
 protected:
